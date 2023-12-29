@@ -1,11 +1,30 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CurrencyConverterMaterialPage extends StatelessWidget {
-  const CurrencyConverterMaterialPage({super.key});
+class CurrencyConverterMaterialPage extends StatefulWidget {
+   CurrencyConverterMaterialPage({super.key});
+
+  @override
+  State<CurrencyConverterMaterialPage> createState() => _CurrencyConverterMaterialPageState();
+}
+
+class _CurrencyConverterMaterialPageState extends State<CurrencyConverterMaterialPage> {
+  TextEditingController currencyConverter = TextEditingController();
+  double result = 0;
+
+  void convert() {
+    result = double.parse(currencyConverter.text) * 80;
+    setState(() {});
+  }
+  @override
+  void dispose() {
+    currencyConverter.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     final border = OutlineInputBorder(
         borderSide: BorderSide(color: Colors.amber, width: 2.0),
         borderRadius: BorderRadius.only(
@@ -23,9 +42,9 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Center(
+           Center(
             child: Text(
-              '0',
+              result.toString(),
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w800,
@@ -33,6 +52,7 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
             ),
           ),
           TextField(
+            controller: currencyConverter,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
               hintText: 'Please enter the amount in USD',
@@ -50,14 +70,7 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
           ),
 
           TextButton(
-              onPressed: () {
-                // if (kDebugMode){
-                //   print('button clicked');
-                // }
-                if (kDebugMode) {
-                  print('button clicked');
-                }
-              },
+              onPressed: convert,
               style:
               ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.cyan),
